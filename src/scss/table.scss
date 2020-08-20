@@ -50,10 +50,13 @@
     border-left: none;
     white-space: nowrap;
     outline: none;
+    position: relative;
+    overflow: hidden;
     &.selected{
       border: none;
       outline: 2px solid $primary_color;
       z-index: 2;
+      overflow: visible;
     }
   }
   .col-resize, .row-resize{
