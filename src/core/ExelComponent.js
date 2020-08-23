@@ -5,7 +5,10 @@ export class ExelComponent extends DomListener {
         super($root, options.listeners);
         this.name = options.name || ''
         this.emiter = options.emiter
+        this.subscribe = options.subscribe || []
+        this.store = options.store
         this.unsubscribers = []
+
         this.prepare()
     }
     // Настраиваем наш компонент до init
@@ -22,6 +25,15 @@ export class ExelComponent extends DomListener {
     $on(event, fn) {
         const unsub = this.emiter.subscribe(event, fn)
         this.unsubscribers.push(unsub)
+    }
+    $dispatch(action) {
+        this.store.dispatch(action)
+    }
+    // changes from the fields that was subscribed only
+    storeChanged() {
+    }
+    isWatching(key) {
+        return this.subscribe.includes(key)
     }
     // Инициализируем компонент
     // Добавляем ДОМ слушателей
