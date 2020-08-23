@@ -1,10 +1,11 @@
 import {$} from '../../core/dom';
 import {Emiter} from '@core/Emiter';
 import {StoreSubscriber} from '@core/storeSubscriber';
+import {updateDate} from '@/redux/actions';
+import {preventDefault} from '@core/utils';
 
 export class Exel {
-    constructor(selector, options) {
-        this.$el = $(selector)
+    constructor(options) {
         this.components = options.components || []
         this.store = options.store
         this.emiter = new Emiter()
@@ -30,13 +31,17 @@ export class Exel {
         })
         return $root
     }
-    render() {
-        this.$el.append(this.getRoot())
+    init() {
+        if (process.env.NODE_ENV === 'production') {
+            document.addEventListener('contextmenu', preventDefault)
+        }
+        this.store.dispatch(updateDate())
         this.components.forEach(component => component.init())
         this.subscriber.subscribeComponents(this.components)
     }
     destroy() {
         this.subscriber.unsubscribeFromStore()
         this.components.forEach(component => component.destroy())
+        document.removeEventListener('contextmenu', preventDefault)
     }
 }
