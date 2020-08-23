@@ -16,4 +16,12 @@
   .button{
     @include button(green);
   }
+  i.active{
+    color: green;
+    background-color: #eee;
+  }
+  .button.active i{
+    color: green;
+    background-color: #eee;
+  }
 }

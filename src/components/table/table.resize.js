@@ -1,6 +1,7 @@
 import {$} from '@core/dom';
 
 export function resizeHandler($root, event) {
+    return new Promise(resolve => {
         const $resizer = $(event.target)
         // const $parent = $resizer.$el.parentNode // Bad
         // const $parent = $resizer.$el.closest('.column') // Better but bad
@@ -36,10 +37,17 @@ export function resizeHandler($root, event) {
             } else {
                 $parent.css({height: value + 'px'})
             }
+            resolve({
+                value,
+                type,
+                // id: type === 'col' ? $parent.data.col : $parent.data.row
+                id: $parent.data[type]
+            })
             $resizer.css({
                 opacity: 0,
                 bottom: '0',
                 right: 0
             })
         }
+    })
 }
