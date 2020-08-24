@@ -40,8 +40,11 @@ class Dom {
         if (Element.prototype.append) {
             this.$el.append(node)
         } else {
-            this.$el.appendChild(node.$el)
+            this.$el.appendChild(node)
         }
+        //  else {
+        //     this.$el.appendChild(node.$el)
+        // }
         return this
     }
     get data() {
@@ -89,9 +92,11 @@ class Dom {
     }
     addClass(className) {
         this.$el.classList.add(className)
+        return this
     }
     removeClass(className) {
         this.$el.classList.remove(className)
+        return this
     }
     attr(name, value) {
         if (value) {
@@ -101,7 +106,6 @@ class Dom {
         return this.$el.getAttribute(name)
     }
 }
-$('div').html('<h1>Test</h1>').clear()
 export function $(selector) {
     return new Dom(selector)
 }
